@@ -16,13 +16,11 @@ const winningCombos = [
     [2, 4, 6]
 ];
 
-restartButton.addEventListener('click', restartGame);
-
 cells.forEach(cell => {
     cell.addEventListener('click', handleClick);
 });
 
-
+restartButton.addEventListener('click', restartGame);
 
 function handleClick(event) {
     const clickedCell = event.target;
@@ -31,12 +29,13 @@ function handleClick(event) {
     if (board[cellIndex] === '') {
         board[cellIndex] = currentPlayer;
         clickedCell.textContent = currentPlayer;
-
+        
         if (checkWinner()) {
             resultDisplay.textContent = `Player ${currentPlayer} wins!`;
-            cells.forEach(cell => cell.removeEventListener('click', handleClick));
+            disableCellClicks();
         } else if (board.every(cell => cell !== '')) {
             resultDisplay.textContent = 'It\'s a draw!';
+            disableCellClicks();
         } else {
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
         }
@@ -49,6 +48,10 @@ function checkWinner() {
             return board[index] === currentPlayer;
         });
     });
+}
+
+function disableCellClicks() {
+    cells.forEach(cell => cell.removeEventListener('click', handleClick));
 }
 
 function restartGame() {
