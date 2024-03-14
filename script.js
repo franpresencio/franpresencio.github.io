@@ -1,8 +1,8 @@
 const cells = document.querySelectorAll('.cell');
-const resultDisplay = document.getElementById('result') as HTMLElement;
+const resultDisplay = document.getElementById('result');
 
 let currentPlayer = 'X';
-let board: string[] = ['', '', '', '', '', '', '', '', ''];
+let board = ['', '', '', '', '', '', '', '', ''];
 
 const winningCombos = [
     [0, 1, 2],
@@ -19,8 +19,8 @@ cells.forEach(cell => {
     cell.addEventListener('click', handleClick);
 });
 
-function handleClick(event: MouseEvent) {
-    const clickedCell = event.target as HTMLElement;
+function handleClick(event) {
+    const clickedCell = event.target ;
     const cellIndex = parseInt(clickedCell.id.split('-')[1]);
 
     if (board[cellIndex] === '') {
@@ -38,7 +38,7 @@ function handleClick(event: MouseEvent) {
     }
 }
 
-function checkWinner(): boolean {
+function checkWinner() {
     return winningCombos.some(combo => {
         return combo.every(index => {
             return board[index] === currentPlayer;
