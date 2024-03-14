@@ -1,5 +1,6 @@
 const cells = document.querySelectorAll('.cell');
 const resultDisplay = document.getElementById('result');
+const restartButton = document.getElementById('restart-btn');
 
 let currentPlayer = 'X';
 let board = ['', '', '', '', '', '', '', '', ''];
@@ -15,18 +16,22 @@ const winningCombos = [
     [2, 4, 6]
 ];
 
+restartButton.addEventListener('click', restartGame);
+
 cells.forEach(cell => {
     cell.addEventListener('click', handleClick);
 });
 
+
+
 function handleClick(event) {
-    const clickedCell = event.target ;
+    const clickedCell = event.target;
     const cellIndex = parseInt(clickedCell.id.split('-')[1]);
 
     if (board[cellIndex] === '') {
         board[cellIndex] = currentPlayer;
         clickedCell.textContent = currentPlayer;
-        
+
         if (checkWinner()) {
             resultDisplay.textContent = `Player ${currentPlayer} wins!`;
             cells.forEach(cell => cell.removeEventListener('click', handleClick));
@@ -44,4 +49,14 @@ function checkWinner() {
             return board[index] === currentPlayer;
         });
     });
+}
+
+function restartGame() {
+    board = ['', '', '', '', '', '', '', '', ''];
+    cells.forEach(cell => {
+        cell.textContent = '';
+        cell.addEventListener('click', handleClick);
+    });
+    resultDisplay.textContent = '';
+    currentPlayer = 'X';
 }
